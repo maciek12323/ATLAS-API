@@ -14,7 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+
+Route::get('/cards', [CardsController::class, 'index']);
+Route::post('/cards', [CardsController::class, 'store']);
+Route::get('/cards/{id}', [CardsController::class, 'show']);
+Route::put('/cards/{id}', [CardsController::class, 'update']);
+Route::delete('/cards/{id}', [CardsController::class, 'destroy']);
+
 
