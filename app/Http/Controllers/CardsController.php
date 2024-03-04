@@ -66,4 +66,9 @@ class CardsController extends Controller
                 "message" => "Card not found."
             ], 404);
         }
+    }
+
+    public function getData(){
+        return ["name"=>"siema"];
+    }
 }

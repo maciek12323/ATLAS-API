@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CardsController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,4 +22,4 @@ Route::get('/cards/{id}', [CardsController::class, 'show']);
 Route::put('/cards/{id}', [CardsController::class, 'update']);
 Route::delete('/cards/{id}', [CardsController::class, 'destroy']);
 
-
+Route::get("data",[CardsController::class, "getData"]);
