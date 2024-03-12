@@ -21,6 +21,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/login', [UserController::class, 'LoginUser']);
     Route::post('/logout', [UserController::class, 'LogoutUser']);
     Route::post('/whoami', [UserController::class, 'GetCurrentUser']);
+    Route::post('/getuserbyid', [UserController::class, 'GetUserById']);
 
     //Cards routes
     Route::get('/cards', [CardsController::class, 'index']);

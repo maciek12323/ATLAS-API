@@ -71,5 +71,22 @@ class UserController extends Controller
         return response()->json([]);
     }
 
+    public function GetUserById(Request $request)
+    {
+        if(!$request->has('id'))
+        {
+            return response()->json(['errors'=>"Invalid request"], 400);
+        }
 
+        $users = $this->_userAuthService->GetUsersById($request['id']);
+
+        if($users['success'] == false)
+        {
+            return response()->json(['errors'=>$users['errors']], 401);
+        }
+
+        return response()->json([
+            'users' => $users
+        ]);
+    }
 }
