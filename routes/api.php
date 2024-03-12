@@ -14,21 +14,23 @@ use App\Http\Controllers\UserController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::middleware(['auth:sanctum'])->group(function () {
+
 
     //User routes
-    Route::post('/register', [UserController::class, 'RegisterUser']);
-    Route::post('/login', [UserController::class, 'LoginUser']);
-    Route::post('/logout', [UserController::class, 'LogoutUser']);
-    Route::post('/whoami', [UserController::class, 'GetCurrentUser']);
-    Route::post('/getuserbyid', [UserController::class, 'GetUserById']);
+Route::post('/register', [UserController::class, 'registerUser']);
+Route::post('/login', [UserController::class, 'loginUser']);
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/logout', [UserController::class, 'logoutUser']);
+    Route::get('/user-id', [UserController::class, 'getUserId']);
+});
 
     //Cards routes
-    Route::get('/cards', [CardsController::class, 'index']);
-    Route::post('/cards', [CardsController::class, 'store']);
-    Route::get('/cards/{id}', [CardsController::class, 'show']);
-    Route::put('/cards/{id}', [CardsController::class, 'update']);
-    Route::delete('/cards/{id}', [CardsController::class, 'destroy']);
-    Route::get("data",[CardsController::class, "getData"]);
-});
+Route::get('/cards', [CardsController::class, 'index']);
+Route::post('/cards', [CardsController::class, 'store']);
+Route::get('/cards/{id}', [CardsController::class, 'show']);
+Route::put('/cards/{id}', [CardsController::class, 'update']);
+Route::delete('/cards/{id}', [CardsController::class, 'destroy']);
+Route::get("data",[CardsController::class, "getData"]);
+
 
