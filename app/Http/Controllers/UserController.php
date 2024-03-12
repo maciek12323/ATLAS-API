@@ -68,11 +68,6 @@ class UserController extends Controller
         return response(['message'=>"Logged out"]);
     }
 
-    public function getUserId(Request $request)
-    {
-
-    }
-
 
 
 }

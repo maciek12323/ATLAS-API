@@ -22,7 +22,6 @@ Route::post('/login', [UserController::class, 'loginUser']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [UserController::class, 'logoutUser']);
-    Route::get('/user-id', [UserController::class, 'getUserId']);
 });
 
     //Cards routes
