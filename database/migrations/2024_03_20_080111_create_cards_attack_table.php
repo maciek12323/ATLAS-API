@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('cards_attack', function (Blueprint $table) {
             $table->id();
+            $table->string('element');
+            $table->integer('energyCost');
+            $table->string('cardName');
+            $table->string('cardBasicDescription');
+            $table->string('cardGoldDescription');
+            $table->string('type');
+            $table->integer('AttackLeft');
+            $table->integer('AttackFront');
+            $table->integer('AttackRight');
             $table->timestamps();
         });
     }
