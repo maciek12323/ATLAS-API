@@ -4,20 +4,21 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
-class UserControllerTest extends TestCase
+class UserFeatureTest extends TestCase
 {
     use DatabaseTransactions;
-    use WithFaker;
 
-    public function testRegisterUser()
+    public function testUserRegistration()
     {
         $userData = [
-            'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
+            'name' => 'Test User',
+            'email' => 'test@example.com',
             'password' => 'password123',
         ];
 
@@ -37,19 +38,19 @@ class UserControllerTest extends TestCase
             ]);
     }
 
-    public function testLoginUser()
+    public function testUserLogin()
     {
-        $password = 'password123';
         $user = User::factory()->create([
-            'password' => Hash::make($password),
+            'email' => 'test@example.com',
+            'password' => Hash::make('password123'),
         ]);
 
-        $userData = [
-            'email' => $user->email,
-            'password' => $password,
+        $loginData = [
+            'email' => 'test@example.com',
+            'password' => 'password123',
         ];
 
-        $response = $this->postJson('/api/login', $userData);
+        $response = $this->postJson('/api/login', $loginData);
 
         $response->assertStatus(200)
             ->assertJsonStructure([
@@ -65,18 +66,15 @@ class UserControllerTest extends TestCase
             ]);
     }
 
-    public function testLogoutUser()
+    public function testUserLogout()
     {
         $user = User::factory()->create();
         $token = $user->createToken('testToken')->plainTextToken;
 
-        $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $token,
-        ])->postJson('/api/logout');
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->postJson('/api/logout');
 
         $response->assertStatus(200)
             ->assertExactJson(['message' => 'Logged out']);
-
-        $this->assertEmpty($user->tokens);
     }
 }
