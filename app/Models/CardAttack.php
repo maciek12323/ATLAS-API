@@ -13,6 +13,7 @@ class CardAttack extends Model
         'element',
         'energyCost',
         'cardName',
+        //'cardImage',
         'cardBasicDescription',
         'cardGoldDescription',
         'type',
