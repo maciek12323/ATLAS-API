@@ -13,11 +13,12 @@ class CardDefend extends Model
         'element',
         'energyCost',
         'cardName',
-        'cardImage',
         'cardBasicDescription',
         'cardGoldDescription',
-        'AttackLeft',
-        'AttackFront',
-        'AttackRight'
+        'type',
+        'defLeft',
+        'defFront',
+        'defRight',
+        'heal'
     ];
 }
