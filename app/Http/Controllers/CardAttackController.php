@@ -3,47 +3,85 @@
 namespace App\Http\Controllers;
 
 use App\Models\CardAttack;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CardAttackController extends Controller
 {
-    public function addCardAttack(Request $request)
+    public function store_AttackCard(Request $request)
     {
-        // Validate incoming request data
-        $validatedData = $request->validate([
-            'element' => 'required|string',
-            'energyCost' => 'required|integer',
-            'cardName' => 'required|string',
-            'cardImage' => 'required|string',
-            'cardBasicDescription' => 'required|string',
-            'cardGoldDescription' => 'required|string',
-            'type' => 'required|string',
-            'AttackLeft' => 'required|integer',
-            'AttackFront' => 'required|integer',
-            'AttackRight' => 'required|integer',
-        ]);
+        try{
+            $cardsAttack = new CardAttack;
+            $cardsAttack->element=$request->element;
+            $cardsAttack->energyCost=$request->energyCost;
+            $cardsAttack->cardName=$request->cardName;
+            $cardsAttack->cardImage=$request->cardImage;
+            $cardsAttack->cardBasicDescription=$request->cardBasicDescription;
+            $cardsAttack->cardGoldDescription=$request->cardGoldDescription;
+            $cardsAttack->type=$request->type;
+            $cardsAttack->defLeft=$request->defLeft;
+            $cardsAttack->defFront=$request->defFront;
+            $cardsAttack->defRight=$request->defRight;
+            $cardsAttack->heal=$request->heal;
+            $cardsAttack->created_at=Carbon::now();
+            $cardsAttack->updated_at=Carbon::now();
+            $cardsAttack->save();
 
-        // Create a new card instance
-        $card = new CardAttack([
-            'element' => $validatedData['element'],
-            'energyCost' => $validatedData['energyCost'],
-            'cardName' => $validatedData['cardName'],
-            'cardImage' => $validatedData['cardImage'],
-            'cardBasicDescription' => $validatedData['cardBasicDescription'],
-            'cardGoldDescription' => $validatedData['cardGoldDescription'],
-            'type' => $validatedData['type'],
-            'AttackLeft' => $validatedData['AttackLeft'],
-            'AttackFront' => $validatedData['AttackFront'],
-            'AttackRight' => $validatedData['AttackRight'],
-        ]);
+            return response()->json([
 
-        // Save the card to the database
-        $card->create();
+                'message' => 'Card Added Successfully',
+                'cardAttack' => $cardsAttack,
+                'status' =>200
+            ]);
 
-        // Return a JSON response with the newly created card and a success message
+        }catch (\Exception $e)
+        {
+            return response()->json([
+
+                'message' => 'Card Not Added',
+                'cardAttack' => $cardsAttack,
+                'status' =>201,
+                '4' => $e,
+            ]);
+        }
+    }
+
+    public function showCard($id)
+    {
+        $cardAttack = CardAttack::find($id);
+
+        if (!$cardAttack) {
+
+            return response()->json([
+                'message' => 'Card not found',
+                'status' => 404,
+            ]);
+        }
+
         return response()->json([
-            'card' => $card,
-            'message' => 'Card added successfully',
-        ], 201);
+            'cardAttack' => $cardAttack,
+            'message' => 'Card details retrieved successfully',
+            'status' => 200
+        ]);
+    }
+
+    public function deleteCard($id)
+    {
+        $cardAttack = CardAttack::find($id);
+
+        if (!$cardAttack) {
+
+            return response()->json([
+                'message' => 'Card not found',
+                'status' => 404,
+            ]);
+        }
+
+        $cardAttack->delete();
+
+        return response()->json([
+            'message' => 'Card deleted successfully',
+            'status' => 200
+        ]);
     }
 }

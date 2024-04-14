@@ -31,7 +31,7 @@ Route::post('/storeH', [CardHeroController::class, 'store_HeroCard']);
 Route::get('/showH/{id}', [CardHeroController::class, 'showCard']);
 Route::delete('/deleteH/{id}', [CardHeroController::class, 'deleteCard']);
     //Attack Card
-Route::post('/storeA', [CardAttackController::class, 'store_DefendCard']);
+Route::post('/storeA', [CardAttackController::class, 'store_AttackCard']);
 Route::get('/showA/{id}', [CardAttackController::class, 'showCard']);
 Route::delete('/deleteA/{id}', [CardAttackController::class, 'deleteCard']);
     //Defend Card
