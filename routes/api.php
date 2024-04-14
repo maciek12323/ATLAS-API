@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CardAttackController;
 use App\Http\Controllers\CardHeroController;
+use App\Http\Controllers\CardDefendController;
 use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
@@ -26,15 +27,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 //Card routes
     //Hero Card
-Route::post('/cardH', [CardHeroController::class, 'store_HeroCard']);
+Route::post('/storeH', [CardHeroController::class, 'store_HeroCard']);
 Route::get('/showH/{id}', [CardHeroController::class, 'showCard']);
 Route::delete('/deleteH/{id}', [CardHeroController::class, 'deleteCard']);
     //Attack Card
-Route::post('/cardA', [CardAttackController::class, 'store_HeroCard']);
+Route::post('/storeA', [CardAttackController::class, 'store_DefendCard']);
 Route::get('/showA/{id}', [CardAttackController::class, 'showCard']);
 Route::delete('/deleteA/{id}', [CardAttackController::class, 'deleteCard']);
     //Defend Card
-Route::post('/cardD', [CardDefendController::class, 'store_HeroCard']);
+Route::post('/storeD', [CardDefendController::class, 'store_DefendCard']);
 Route::get('/showD/{id}', [CardDefendController::class, 'showCard']);
 Route::delete('/deleteD/{id}', [CardDefendController::class, 'deleteCard']);
 
