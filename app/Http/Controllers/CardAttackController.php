@@ -19,10 +19,9 @@ class CardAttackController extends Controller
             $cardsAttack->cardBasicDescription=$request->cardBasicDescription;
             $cardsAttack->cardGoldDescription=$request->cardGoldDescription;
             $cardsAttack->type=$request->type;
-            $cardsAttack->defLeft=$request->defLeft;
-            $cardsAttack->defFront=$request->defFront;
-            $cardsAttack->defRight=$request->defRight;
-            $cardsAttack->heal=$request->heal;
+            $cardsAttack->AttackLeft=$request->AttackLeft;
+            $cardsAttack->AttackFront=$request->AttackFront;
+            $cardsAttack->AttackRight=$request->AttackRight;
             $cardsAttack->created_at=Carbon::now();
             $cardsAttack->updated_at=Carbon::now();
             $cardsAttack->save();
