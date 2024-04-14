@@ -4,45 +4,46 @@ namespace App\Http\Controllers;
 
 use App\Models\CardAttack;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
 class CardAttackController extends Controller
 {
-    public function addAttackCard(Request $request)
+    public function addCardAttack(Request $request)
     {
-        $data = $request->validate(
-            [
-                'element' => 'required|string|max:190',
-                'energyCost' => 'required|integer',
-                'cardName' => 'required|string|max:190',
-                'cardImage' => 'required|string|max:190',
-                'cardBasicDescription' => 'required|string|max:190',
-                'cardGoldDescription' => 'required|string|max:190',
-                'type' => 'required|string|max:190',
-                'AttackLeft' => 'required|integer',
-                'AttackFront' => 'required|integer',
-                'AttackRight' => 'required|integer',
-            ]);
-
-        $cardAttackCard = CardAttack::create([
-            'element' => $data['element'],
-            'energyCost' => $data['energyCost'],
-            'cardName' => $data['cardName'],
-            'cardImage' => $data['cardImage'],
-            'cardBasicDescription' => $data['cardBasicDescription'],
-            'cardGoldDescription' => $data['cardGoldDescription'],
-            'type' => $data['type'],
-            'AttackLeft' => $data['AttackLeft'],
-            'AttackFront' => $data['AttackFront'],
-            'AttackRight' => $data['AttackRight']
+        // Validate incoming request data
+        $validatedData = $request->validate([
+            'element' => 'required|string',
+            'energyCost' => 'required|integer',
+            'cardName' => 'required|string',
+            'cardImage' => 'required|string',
+            'cardBasicDescription' => 'required|string',
+            'cardGoldDescription' => 'required|string',
+            'type' => 'required|string',
+            'AttackLeft' => 'required|integer',
+            'AttackFront' => 'required|integer',
+            'AttackRight' => 'required|integer',
         ]);
 
+        // Create a new card instance
+        $card = new CardAttack([
+            'element' => $validatedData['element'],
+            'energyCost' => $validatedData['energyCost'],
+            'cardName' => $validatedData['cardName'],
+            'cardImage' => $validatedData['cardImage'],
+            'cardBasicDescription' => $validatedData['cardBasicDescription'],
+            'cardGoldDescription' => $validatedData['cardGoldDescription'],
+            'type' => $validatedData['type'],
+            'AttackLeft' => $validatedData['AttackLeft'],
+            'AttackFront' => $validatedData['AttackFront'],
+            'AttackRight' => $validatedData['AttackRight'],
+        ]);
+
+        // Save the card to the database
+        $card->create();
+
+        // Return a JSON response with the newly created card and a success message
         return response()->json([
-            'user' => $cardAttackCard,
-            'message' => 'Card Added Successfully',
+            'card' => $card,
+            'message' => 'Card added successfully',
         ], 201);
     }
 }
