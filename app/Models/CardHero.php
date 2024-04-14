@@ -11,7 +11,7 @@ class CardHero extends Model
     protected $table = 'cardsHero';
     protected  $fillable = [
         'name',
-        //'heroImage',
+        'heroImage',
         'talentDescription',
         'talentCooldown',
         'talentType',

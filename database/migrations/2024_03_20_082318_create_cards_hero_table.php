@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('cards_hero', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('heroImage');
             $table->string('talentDescription');
             $table->integer('talentCooldown');
             $table->string('talentType');

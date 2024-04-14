@@ -13,7 +13,7 @@ class CardDefend extends Model
         'element',
         'energyCost',
         'cardName',
-        //'cardImage',
+        'cardImage',
         'cardBasicDescription',
         'cardGoldDescription',
         'type',

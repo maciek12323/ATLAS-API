@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('element');
             $table->integer('energyCost');
             $table->string('cardName');
+            $table->string('cardImage');
             $table->string('cardBasicDescription');
             $table->string('cardGoldDescription');
             $table->string('type');
