@@ -68,6 +68,26 @@ class UserController extends Controller
         return response(['message'=>"Logged out"]);
     }
 
+    public function updateUser(Request $request)
+    {
+        $user = auth()->user();
 
+        $data = $request->validate([
+            'name' => 'sometimes|string|max:190',
+            'email' => 'sometimes|email|max:190|unique:users,email,'.$user->id,
+            'password' => 'sometimes|string',
+        ]);
+
+        if(isset($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        }
+
+        $user->update($data);
+
+        return response()->json([
+            'user' => $user,
+            'message' => 'User profile updated successfully',
+        ], 200);
+    }
 
 }
