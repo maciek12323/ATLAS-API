@@ -6,6 +6,8 @@ use App\Http\Controllers\CardAttackController;
 use App\Http\Controllers\CardHeroController;
 use App\Http\Controllers\CardDefendController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\Cors;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,26 +20,36 @@ use App\Http\Controllers\UserController;
 */
 
 
-//User routes
-Route::post('/register', [UserController::class, 'registerUser']);
-Route::post('/login', [UserController::class, 'loginUser']);
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::post('/logout', [UserController::class, 'logoutUser']);
-});
+Route::middleware([Cors::class])->group(function ()
+{
 
-//Card routes
+    //User routes
+    Route::post('/register', [UserController::class, 'registerUser']);
+    Route::post('/login', [UserController::class, 'loginUser']);
+
+    Route::middleware(['auth:sanctum'])->group(function ()
+    {
+        Route::post('/logout', [UserController::class, 'logoutUser']);
+        Route::post('/update', [UserController::class, 'updateUser']);
+    });
+
+    //Card routes
+
     //Hero Card
-Route::post('/storeH', [CardHeroController::class, 'store_HeroCard']);
-Route::get('/showH/{id}', [CardHeroController::class, 'showCard']);
-Route::delete('/deleteH/{id}', [CardHeroController::class, 'deleteCard']);
+    Route::post('/storeH', [CardHeroController::class, 'store_HeroCard']);
+    Route::get('/showH/{id}', [CardHeroController::class, 'showCard']);
+    Route::delete('/deleteH/{id}', [CardHeroController::class, 'deleteCard']);
+
     //Attack Card
-Route::post('/storeA', [CardAttackController::class, 'store_AttackCard']);
-Route::get('/showA/{id}', [CardAttackController::class, 'showCard']);
-Route::delete('/deleteA/{id}', [CardAttackController::class, 'deleteCard']);
+    Route::post('/storeA', [CardAttackController::class, 'store_AttackCard']);
+    Route::get('/showA/{id}', [CardAttackController::class, 'showCard']);
+    Route::delete('/deleteA/{id}', [CardAttackController::class, 'deleteCard']);
+
     //Defend Card
-Route::post('/storeD', [CardDefendController::class, 'store_DefendCard']);
-Route::get('/showD/{id}', [CardDefendController::class, 'showCard']);
-Route::delete('/deleteD/{id}', [CardDefendController::class, 'deleteCard']);
+    Route::post('/storeD', [CardDefendController::class, 'store_DefendCard']);
+    Route::get('/showD/{id}', [CardDefendController::class, 'showCard']);
+    Route::delete('/deleteD/{id}', [CardDefendController::class, 'deleteCard']);
+});
 
 
 
