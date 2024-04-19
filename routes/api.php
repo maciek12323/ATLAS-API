@@ -20,13 +20,15 @@ use App\Http\Middleware\Cors;
 */
 
 
-Route::middleware([Cors::class])->group(function () {
+Route::middleware([Cors::class])->group(function ()
+{
 
     //User routes
     Route::post('/register', [UserController::class, 'registerUser']);
     Route::post('/login', [UserController::class, 'loginUser']);
 
-    Route::middleware(['auth:sanctum'])->group(function () {
+    Route::middleware(['auth:sanctum'])->group(function ()
+    {
         Route::post('/logout', [UserController::class, 'logoutUser']);
         Route::post('/update', [UserController::class, 'updateUser']);
     });
