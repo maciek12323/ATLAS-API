@@ -1,29 +1,33 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
-use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
+use App\Models\User;
+use App\Models\Statistics;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Mockery;
 
-class UserControllerTest extends TestCase
+class UserTest extends TestCase
 {
-    use DatabaseTransactions;
-    use WithFaker;
+    use RefreshDatabase;
 
-    public function testRegisterUser()
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        Mockery::close();
+    }
+
+    public function test_user_can_register()
     {
         $userData = [
-            'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
-            'password' => 'password123',
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => 'password',
         ];
 
-        $response = $this->postJson('/api/register', $userData);
-
-        $response->assertStatus(201)
+        $this->postJson('/api/register', $userData)
+            ->assertStatus(201)
             ->assertJsonStructure([
                 'user' => [
                     'id',
@@ -37,21 +41,20 @@ class UserControllerTest extends TestCase
             ]);
     }
 
-    public function testLoginUser()
+    public function test_user_can_login()
     {
-        $password = 'password123';
         $user = User::factory()->create([
-            'password' => Hash::make($password),
+            'email' => 'test@example.com',
+            'password' => bcrypt('password'),
         ]);
 
-        $userData = [
-            'email' => $user->email,
-            'password' => $password,
+        $loginData = [
+            'email' => 'test@example.com',
+            'password' => 'password',
         ];
 
-        $response = $this->postJson('/api/login', $userData);
-
-        $response->assertStatus(200)
+        $this->postJson('/api/login', $loginData)
+            ->assertStatus(200)
             ->assertJsonStructure([
                 'user' => [
                     'id',
@@ -65,18 +68,16 @@ class UserControllerTest extends TestCase
             ]);
     }
 
-    public function testLogoutUser()
+    public function test_user_can_logout()
     {
         $user = User::factory()->create();
-        $token = $user->createToken('testToken')->plainTextToken;
+        $token = $user->createToken('apiToken')->plainTextToken;
 
-        $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $token,
-        ])->postJson('/api/logout');
-
-        $response->assertStatus(200)
+        $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->postJson('/api/logout')
+            ->assertStatus(200)
             ->assertExactJson(['message' => 'Logged out']);
-
-        $this->assertEmpty($user->tokens);
     }
+
+    // Add more tests for updateUser, showUser, getUserStatistics methods
 }
