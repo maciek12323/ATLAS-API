@@ -15,4 +15,9 @@ class Statistics extends Model
         'games_won',
         'games_lost',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
