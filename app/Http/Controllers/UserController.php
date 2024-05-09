@@ -29,6 +29,12 @@ class UserController extends Controller
 
         $token = $user->createToken('apiToken')->plainTextToken;
 
+        $user->statistics()->create([
+            'games_played' => 0,
+            'games_won' => 0,
+            'games_lost' => 0,
+        ]);
+
 
         return response()->json([
             'user' => $user,
@@ -88,6 +94,38 @@ class UserController extends Controller
             'user' => $user,
             'message' => 'User profile updated successfully',
         ], 200);
+    }
+
+    public function showUser($id)
+    {
+        if (Auth::check()) {
+            $user = User::find($id);
+
+            if (!$user) {
+                return response()->json(['message' => 'User not found'], 404);
+            }
+
+            return response()->json(['user' => $user], 200);
+        } else {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+    }
+
+    public function getUserStatistics($userId)
+    {
+        if (Auth::check()) {
+            $user = User::find($userId);
+
+            if (!$user) {
+                return response()->json(['message' => 'User not found'], 404);
+            }
+
+            $statistics = $user->statistics;
+
+            return response()->json(['statistics' => $statistics], 200);
+        } else {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
     }
 
 }
