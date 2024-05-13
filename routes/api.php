@@ -18,9 +18,6 @@ use App\Http\Controllers\UserController;
 |
 */
 
-
-
-
 //User routes
 Route::post('/register', [UserController::class, 'registerUser']);
 Route::post('/login', [UserController::class, 'loginUser']);
