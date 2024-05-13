@@ -12,8 +12,7 @@ class UserFeatureTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
-    public function it_registers_a_user()
+    public function test_it_registers_a_user()
     {
         $userData = [
             'name' => 'John Doe',
@@ -29,8 +28,7 @@ class UserFeatureTest extends TestCase
             ]);
     }
 
-    /** @test */
-    public function it_logs_in_a_user()
+    public function test_it_logs_in_a_user()
     {
         $user = User::factory()->create([
             'email' => 'test@example.com',
@@ -50,8 +48,7 @@ class UserFeatureTest extends TestCase
             ]);
     }
 
-    /** @test */
-    public function it_logs_out_a_user()
+    public function test_it_logs_out_a_user()
     {
         $user = User::factory()->create();
         $token = $user->createToken('testToken')->plainTextToken;
@@ -66,8 +63,7 @@ class UserFeatureTest extends TestCase
             ]);
     }
 
-    /** @test */
-    public function it_updates_a_user_profile()
+    public function test_it_updates_a_user_profile()
     {
         $user = User::factory()->create();
 
@@ -93,8 +89,7 @@ class UserFeatureTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function it_shows_a_user()
+    public function test_it_shows_a_user()
     {
         $user = User::factory()->create();
         $this->actingAs($user);
@@ -107,8 +102,7 @@ class UserFeatureTest extends TestCase
             ]);
     }
 
-    /** @test */
-    public function it_gets_user_statistics()
+    public function test_it_gets_user_statistics()
     {
         $user = User::factory()->create();
         $this->actingAs($user);

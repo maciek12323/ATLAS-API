@@ -78,6 +78,4 @@ class UserTest extends TestCase
             ->assertStatus(200)
             ->assertExactJson(['message' => 'Logged out']);
     }
-
-    // Add more tests for updateUser, showUser, getUserStatistics methods
 }
